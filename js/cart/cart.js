@@ -1,22 +1,17 @@
-/**
- * Cart Page Logic
- * Vanilla JS ES6+ | TailwindCSS | localStorage persistence
- */
 
-// ==================== CONFIG ====================
 const STORAGE_KEY = 'ecommerce_cart';
 const PROMO_CODES = {
   'SAVE10': { type: 'percent', value: 10 }
 };
 
-// ==================== STATE ====================
+
 const state = {
   items: [],
   promo: null,
   discount: 0
 };
 
-// ==================== DOM SELECTORS ====================
+
 const selectors = {
   emptyState: '#empty-state',
   cartContent: '#cart-content',
@@ -32,7 +27,7 @@ const selectors = {
   checkoutBtn: '#checkout-btn'
 };
 
-// ==================== UTILS ====================
+
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
@@ -63,7 +58,7 @@ const loadFromStorage = () => {
   }
 };
 
-// ==================== CART LOGIC ====================
+
 const calculateItemTotal = (item) => item.price * item.quantity;
 
 const calculateSubtotal = () => 
@@ -82,7 +77,7 @@ const calculateDiscount = () => {
 
 const getTotal = () => Math.max(0, calculateSubtotal() - state.discount);
 
-// ==================== RENDER ====================
+
 const renderEmptyState = () => {
   $(selectors.emptyState).classList.remove('hidden');
   $(selectors.cartContent).classList.add('hidden');
@@ -181,9 +176,9 @@ const hidePromoMessage = () => {
   $(selectors.promoMessage).classList.add('hidden');
 };
 
-// ==================== EVENT HANDLERS ====================
+
 const attachItemEventListeners = () => {
-  // Remove item
+  
   $$('.remove-item').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
@@ -191,7 +186,7 @@ const attachItemEventListeners = () => {
     });
   });
 
-  // Quantity controls
+  
   $$('.decrease-qty').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
@@ -282,12 +277,12 @@ const applyPromo = () => {
   }
 };
 
-// ==================== INIT ====================
+
 const init = () => {
   loadFromStorage();
   renderCart();
 
-  // Promo code handler
+  
   $(selectors.promoApply).addEventListener('click', applyPromo);
   $(selectors.promoInput).addEventListener('keypress', (e) => {
     if (e.key === 'Enter') applyPromo();
@@ -301,7 +296,7 @@ const init = () => {
     const total = getTotal();
     alert(`Заказ оформлен!\nСумма: ${formatPrice(total)}\n\n(В реальном приложении здесь будет переход к оплате)`);
     
-    // Clear cart after successful order
+    
     state.items = [];
     state.promo = null;
     state.discount = 0;
@@ -309,7 +304,7 @@ const init = () => {
     renderCart();
   });
 
-  // Keyboard navigation enhancement
+  
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       $(selectors.promoInput)?.blur();
@@ -317,7 +312,7 @@ const init = () => {
   });
 };
 
-// ==================== PUBLIC API ====================
+
 window.CartAPI = {
   addItem,
   removeItem,
@@ -333,7 +328,7 @@ window.CartAPI = {
   }
 };
 
-// Initialize on DOM ready
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
