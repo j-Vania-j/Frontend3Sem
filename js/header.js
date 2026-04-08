@@ -1,4 +1,4 @@
-
+// js/header.js
 const headerHTML = `
     <header class="header">
         <div class="container">
@@ -9,6 +9,7 @@ const headerHTML = `
                     </div>
                     <span class="logo-text">TechStore</span>
                 </a>
+
                 <nav class="nav">
                     <ul class="nav-list">
                         <li class="nav-item">
@@ -25,6 +26,7 @@ const headerHTML = `
                         </li>
                     </ul>
                 </nav>
+
                 <div class="header-actions">
                     <button class="icon-btn search-btn" aria-label="Search">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -39,10 +41,77 @@ const headerHTML = `
                             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                         </svg>
                     </button>
+                    <button class="burger-btn" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
             </div>
+        </div>
+
+        <div class="mobile-menu">
+            <nav class="mobile-nav">
+                <ul class="mobile-nav-list">
+                    <li class="mobile-nav-item">
+                        <a href="#products" class="mobile-nav-link">Products</a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#categories" class="mobile-nav-link">Categories</a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#deals" class="mobile-nav-link">Deals</a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#about" class="mobile-nav-link">About</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </header>
 `;
 
+
 document.body.insertAdjacentHTML('afterbegin', headerHTML);
+
+
+function initBurgerMenu() {
+    const burgerBtn = document.querySelector('.burger-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (!burgerBtn || !mobileMenu) {
+        console.error('Бургер или мобильное меню не найдены!');
+        return;
+    }
+
+    burgerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        burgerBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    });
+
+    
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            burgerBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        });
+    });
+
+    
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !burgerBtn.contains(e.target)) {
+            if (mobileMenu.classList.contains('active')) {
+                burgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        }
+    });
+}
+
+
+initBurgerMenu();
