@@ -1,158 +1,100 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
-  <title>Корзина — Интернет-магазин</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          transitionProperty: {
-            'height': 'max-height',
-            'spacing': 'margin, padding',
-          },
-          animation: {
-            'fade-in': 'fadeIn 0.3s ease-out',
-            'slide-up': 'slideUp 0.3s ease-out',
-          },
-          keyframes: {
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
-            },
-            slideUp: {
-              '0%': { opacity: '0', transform: 'translateY(10px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    @layer utilities {
-      .no-scrollbar::-webkit-scrollbar { display: none; }
-      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      .item-enter { animation: slide-up 0.3s ease-out; }
-      .promo-error { animation: shake 0.3s ease-in-out; }
-      @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        75% { transform: translateX(5px); }
-      }
-    }
-    .btn-primary {
-      @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.98];
-    }
-    .btn-secondary {
-      @apply bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2.5 px-5 rounded-lg transition-all duration-200 border border-gray-300 hover:border-gray-400 active:scale-[0.98];
-    }
-    .btn-icon {
-      @apply p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 text-gray-500 hover:text-gray-700;
-    }
-    .quantity-btn {
-      @apply w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
-    }
-    .cart-item {
-      @apply flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина — Shopping Cart</title>
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 min-h-screen font-sans antialiased">
-  <div id="app" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-    <!-- Header -->
-    <header class="mb-6 sm:mb-8">
-      <div class="flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors group">
-          <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-          </svg>
-          <span class="font-medium">Вернуться в каталог</span>
-        </a>
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Корзина</h1>
-        <div class="w-24"></div>
-      </div>
-    </header>
-
-    <!-- Empty State -->
-    <div id="empty-state" class="hidden text-center py-16 animate-fade-in">
-      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-6">
-        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-        </svg>
-      </div>
-      <h2 class="text-xl font-semibold text-gray-900 mb-2">Ваша корзина пуста</h2>
-      <p class="text-gray-500 mb-6 max-w-sm mx-auto">Добавьте товары из каталога, чтобы оформить заказ</p>
-      <a href="index.html" class="btn-primary inline-flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-        </svg>
-        Перейти в каталог
-      </a>
-    </div>
-
-    <!-- Cart Content -->
-    <div id="cart-content" class="hidden">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        
-        <!-- Cart Items -->
-        <div class="lg:col-span-2 space-y-4">
-          <div id="cart-items" class="space-y-3"></div>
-          
-          <!-- Promo Code -->
-          <div class="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Промокод</label>
-            <div class="flex gap-3">
-              <input 
-                type="text" 
-                id="promo-input"
-                placeholder="Введите промокод"
-                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
-                autocomplete="off"
-              />
-              <button id="promo-apply" class="btn-secondary whitespace-nowrap">Применить</button>
-            </div>
-            <p id="promo-message" class="hidden mt-2 text-sm"></p>
-          </div>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="lg:col-span-1">
-          <div class="bg-white rounded-xl border border-gray-200 p-5 sticky top-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Заказ</h3>
+<body>
+    <main class="pk-container">
+        <section class="main-content" id="cartPage">
+            <h1 class="heading" id="cartHeading">Shopping Cart</h1>
             
-            <div class="space-y-3 mb-5 pb-5 border-b border-gray-200">
-              <div class="flex justify-between text-gray-600">
-                <span>Товары (<span id="items-count">0</span>)</span>
-                <span id="subtotal">0 ₽</span>
-              </div>
-              <div id="discount-row" class="hidden flex justify-between text-green-600">
-                <span>Скидка</span>
-                <span id="discount-amount">−0 ₽</span>
-              </div>
-              <div class="flex justify-between text-lg font-semibold text-gray-900 pt-2">
-                <span>Итого</span>
-                <span id="total">0 ₽</span>
-              </div>
+            <div class="cart-container" id="cartContainer">
+                <div class="cart-items" id="cartItemsList"></div>
+                
+                <div class="cart-sidebar">
+                    <aside class="order-summary">
+                        <h2 class="summary-title">Order Summary</h2>
+                        
+                        <div class="totals-section">
+                            <div class="total-row">
+                                <span class="total-label">Subtotal</span>
+                                <span class="total-value" id="subtotalValue">$0.00</span>
+                            </div>
+                            <div class="total-row discount-row hidden" id="discountRow">
+                                <span class="total-label discount-label">Discount (<span id="discountCode">SAVE10</span>)</span>
+                                <span class="total-value discount-value" id="discountValue">-$0.00</span>
+                            </div>
+                            <div class="total-row">
+                                <span class="total-label">Tax (8%)</span>
+                                <span class="total-value" id="taxValue">$0.00</span>
+                            </div>
+                            <div class="total-row total-divider">
+                                <span class="total-label total-bold">Total</span>
+                                <span class="total-value total-bold total-highlight" id="totalValue">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="promo-section">
+                            <label class="promo-label">Promo Code</label>
+                            <div class="promo-input-group">
+                                <input type="text" class="promo-input" id="promoInput" placeholder="Enter code">
+                                <button class="promo-apply" id="applyPromo">Apply</button>
+                            </div>
+                            <p class="promo-hint">Try code "SAVE10" for 10% off</p>
+                        </div>
+                        
+                        <button class="checkout-btn" id="checkoutBtn" disabled>Proceed to Checkout</button>
+                    </aside>
+                    
+                    <div class="shipping-info" id="shippingInfo">
+                      <div class="shipping-header">
+                        <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+                            <path d="M15 18H9"></path>
+                            <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path>
+                            <circle cx="17" cy="18" r="2"></circle>
+                            <circle cx="7" cy="18" r="2"></circle>
+                        </svg>
+                        <h3 class="shipping-title">Shipping Information</h3>
+                      </div>
+                    
+                      <div class="shipping-address">
+                          <svg class="address-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+                              <circle cx="12" cy="10" r="3"></circle>
+                          </svg>
+                          <div class="address-details">
+                              <p class="address-label">Delivery Address</p>
+                              <p class="address-line">123 Tech Street</p>
+                              <p class="address-line">San Francisco, CA 94105</p>
+                          </div>
+                      </div>
+                          
+                      <div class="shipping-details">
+                          <p class="delivery-label">Estimated Delivery</p>
+                          <p class="delivery-time">3-5 business days</p>
+                          <p class="delivery-promo">Free shipping on orders over $50</p>
+                      </div>
+                    </div>
+                </div>
             </div>
-
-            <button id="checkout-btn" class="btn-primary w-full justify-center">
-              Оформить заказ
-            </button>
             
-            <p class="text-xs text-gray-500 text-center mt-4">
-              Нажимая кнопку, вы соглашаетесь с условиями обработки персональных данных
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            <div class="empty-cart-state hidden" id="emptyCartState">
+                <h1 class="heading">Your Cart is Empty</h1>
+                <p class="paragraph">Add some amazing products to get started!</p>
+                <a href="#" class="btn-continue" id="continueShopping">Continue Shopping</a>
+            </div>
+        </section>
+    </main>
 
-  <script type="module" src="../js/cart/cart.js"></script>
+    <script src="../js/cart/cart.js"></script>
+    <script src="../js/header.js"></script>
 </body>
 </html>
