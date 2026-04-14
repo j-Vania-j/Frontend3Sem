@@ -40,6 +40,7 @@ const headerHTML = `
                             <circle cx="20" cy="21" r="1"></circle>
                             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                         </svg>
+                        
                     </button>
                     <button class="burger-btn" aria-label="Menu">
                         <span></span>
@@ -71,7 +72,6 @@ const headerHTML = `
     </header>
 `;
 
-
 document.body.insertAdjacentHTML('afterbegin', headerHTML);
 
 
@@ -81,21 +81,19 @@ function initBurgerMenu() {
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
     if (!burgerBtn || !mobileMenu) {
-        console.error('Бургер или мобильное меню не найдены!');
         return;
     }
 
+    
     burgerBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        burgerBtn.classList.toggle('active');
         mobileMenu.classList.toggle('active');
         document.body.classList.toggle('menu-open');
     });
 
-    
+
     mobileNavLinks.forEach(link => {
         link.addEventListener('click', () => {
-            burgerBtn.classList.remove('active');
             mobileMenu.classList.remove('active');
             document.body.classList.remove('menu-open');
         });
@@ -104,14 +102,10 @@ function initBurgerMenu() {
     
     document.addEventListener('click', (e) => {
         if (!mobileMenu.contains(e.target) && !burgerBtn.contains(e.target)) {
-            if (mobileMenu.classList.contains('active')) {
-                burgerBtn.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }
+            mobileMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
         }
     });
 }
-
 
 initBurgerMenu();
