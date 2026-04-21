@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portable Bluetooth Speaker - TechStore">
+    <title>Portable Bluetooth Speaker - TechStore</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/card.css">
+</head>
+
+<body>
+
+    <main class="product-page">
+        <div class="container mx-auto px-4 lg:px-8 py-8">
+            <div class="product-layout">
+                <section class="product-gallery" aria-label="Product images">
+                    <div class="gallery-main">
+                        <img src="../img/speaker-1.jpg" alt="Portable Bluetooth Speaker - Main view"
+                            class="gallery-main__img" id="main-image">
+
+                        <button class="gallery-nav gallery-nav--prev" aria-label="Previous image">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="gallery-nav gallery-nav--next" aria-label="Next image">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="gallery-thumbs" id="thumbs-container">
+                        <button class="thumb active" data-index="0">
+                            <img src="../img/speaker-1.jpg" alt="Thumbnail 1">
+                        </button>
+                        <button class="thumb" data-index="1">
+                            <img src="../img/speaker-2.jpg" alt="Thumbnail 2">
+                        </button>
+                        <button class="thumb" data-index="2">
+                            <img src="../img/speaker-3.jpg" alt="Thumbnail 3">
+                        </button>
+                    </div>
+                </section>
+
+                <section class="product-info" aria-label="Product information">
+                </section>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
+    <script src="../js/card/card.js"></script>
+</body>
+
+</html>
