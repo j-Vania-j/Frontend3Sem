@@ -19,11 +19,6 @@ body {
     z-index: 100;
 }
 
-.container {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 126.5px;
-}
 
 .header-wrapper {
     display: flex;
@@ -171,7 +166,7 @@ body.menu-open {
 
 @media (max-width: 1440px) {
     .container {
-        padding: 0 80px;
+        padding: 0 40px;
     }
 }
 
@@ -211,7 +206,7 @@ body.menu-open {
     }
     
     .logo-text {
-        font-size: 1.25rem;
+        display: none;
     }
     
     .logo-icon {
