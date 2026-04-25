@@ -126,39 +126,50 @@ function renderSpecs(specs) {
 
 function initCartButton(product) {
     const btn = document.getElementById('add-to-cart-btn');
+    const btnText = btn?.querySelector('.btn-text');
     const quantityInput = document.querySelector('.qty-input');
     if (!btn) return;
 
-    const isInCart = () => getCart().some(item => item.id === product.id);
+    const isInCart = () => {
+        const cart = getCart();
+        return cart.some(item => String(item.id) === String(product.id));
+    };
     
     const updateButtonState = () => {
         if (isInCart()) {
             btn.classList.add('in-cart');
-            btn.querySelector('.btn-text').textContent = '✓ In Cart';
-            btn.disabled = true;
+            if (btnText) btnText.textContent = 'In Cart';
         } else {
             btn.classList.remove('in-cart');
-            btn.querySelector('.btn-text').textContent = 'Add to Cart';
-            btn.disabled = false;
+            if (btnText) btnText.textContent = 'Add to Cart';
         }
     };
 
     updateButtonState();
 
     btn.addEventListener('click', () => {
-        if (isInCart()) return;
-        const quantity = parseInt(quantityInput.value) || 1;
+        const quantity = parseInt(quantityInput?.value) || 1;
+        
         const cartItem = {
-            id: product.id,
+            id: product.id,                    
             title: product.title,
             price: product.price,
-            currency: product.currency,
+            currency: product.currency || '$',
+            category: product.category || 'Electronics',
             quantity: quantity,
-            image: product.images[0],
+            image: product.images?.[0] || '../img/placeholder.jpg',
             addedAt: new Date().toISOString()
         };
+
         const cart = getCart();
-        cart.push(cartItem);
+        const existingItem = cart.find(item => String(item.id) === String(product.id));
+        
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            cart.push(cartItem);
+        }
+        
         saveCart(cart);
         updateButtonState();
     });
