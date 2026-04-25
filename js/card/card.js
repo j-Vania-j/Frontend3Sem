@@ -126,8 +126,26 @@ function renderSpecs(specs) {
 
 function initCartButton(product) {
     const btn = document.getElementById('add-to-cart-btn');
+    const btnText = btn?.querySelector('.btn-text');
     const quantityInput = document.querySelector('.qty-input');
     if (!btn) return;
+
+    const isInCart = () => {
+        const cart = getCart();
+        return cart.some(item => String(item.id) === String(product.id));
+    };
+    
+    const updateButtonState = () => {
+        if (isInCart()) {
+            btn.classList.add('in-cart');
+            if (btnText) btnText.textContent = 'In Cart';
+        } else {
+            btn.classList.remove('in-cart');
+            if (btnText) btnText.textContent = 'Add to Cart';
+        }
+    };
+
+    updateButtonState();
 
     btn.addEventListener('click', () => {
         const quantity = parseInt(quantityInput?.value) || 1;
@@ -144,7 +162,6 @@ function initCartButton(product) {
         };
 
         const cart = getCart();
-        
         const existingItem = cart.find(item => String(item.id) === String(product.id));
         
         if (existingItem) {
@@ -154,6 +171,7 @@ function initCartButton(product) {
         }
         
         saveCart(cart);
+        updateButtonState();
     });
 }
 
