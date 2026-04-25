@@ -244,6 +244,11 @@
     color: #155DFC;
 }
 
+@media (max-width: 1440px) {
+    .container {
+        padding: 0 40px;
+    }
+}
 
 @media (max-width: 1024px) {
     .container {

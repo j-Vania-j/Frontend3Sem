@@ -206,7 +206,7 @@ body.menu-open {
     }
     
     .logo-text {
-        font-size: 1.25rem;
+        display: none;
     }
     
     .logo-icon {
