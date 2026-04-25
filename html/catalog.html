@@ -43,6 +43,71 @@
                     </select>
                 </div>
             </div>
+            
+<div class="catalog-content">
+    
+    <aside class="filters-sidebar">
+        <div class="filters-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            <span>Filters</span>
+        </div>
+        
+        
+        <div class="filter-section">
+            <h3 class="filter-title">Rating</h3>
+            <div class="filter-options">
+                <label class="filter-option">
+                    <input type="checkbox" name="rating" value="5">
+                    <span class="checkmark"></span>
+                    <span class="option-text">5+ Stars</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" name="rating" value="4">
+                    <span class="checkmark"></span>
+                    <span class="option-text">4+ Stars</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" name="rating" value="3">
+                    <span class="checkmark"></span>
+                    <span class="option-text">3+ Stars</span>
+                </label>
+            </div>
+        </div>
+        
+        <
+        <div class="filter-section">
+            <h3 class="filter-title">Price Range</h3>
+            <div class="price-slider">
+                <div class="slider-track">
+                    <div class="slider-range"></div>
+                    <div class="slider-thumb slider-thumb-min"></div>
+                    <div class="slider-thumb slider-thumb-max"></div>
+                </div>
+                <div class="price-values">
+                    <span class="price-min">$0</span>
+                    <span class="price-max">$2600</span>
+                </div>
+            </div>
+        </div>
+        
+        <button class="clear-filters-btn">Clear All Filters</button>
+    </aside>
+    
+    
+    <div class="products-grid" id="products-grid">
+        
+    </div>
+</div>
         </div>
     </main>
     <script src="../js/footer.js"></script>
