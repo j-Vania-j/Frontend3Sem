@@ -2,7 +2,7 @@ const headerHTML = `
     <header class="header">
         <div class="container">
             <div class="header-wrapper">
-                <a href="/" class="logo">
+                <a href="catalog.html" class="logo">
                     <div class="logo-icon">
                         <span>T</span>
                     </div>
@@ -12,7 +12,7 @@ const headerHTML = `
                 <nav class="nav">
                     <ul class="nav-list">
                         <li class="nav-item">
-                            <a href="#products" class="nav-link">Products</a>
+                            <a href="catalog.html" class="nav-link">Products</a>
                         </li>
                         <li class="nav-item">
                             <a href="#categories" class="nav-link">Categories</a>

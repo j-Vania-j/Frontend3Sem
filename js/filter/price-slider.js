@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let min = parseInt(minSlider.value);
         let max = parseInt(maxSlider.value);
         
-       
+        
         if (min > max - 10) {
             min = max - 10;
             minSlider.value = min;
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             maxSlider.value = max;
         }
         
-        
+       
         minValue.textContent = "$" + min.toLocaleString();
         maxValue.textContent = "$" + max.toLocaleString();
         
