@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const discountRow = document.getElementById('discountRow');
     const discountValue = document.getElementById('discountValue');
     const discountCodeEl = document.getElementById('discountCode');
+    const promoErrorEl = document.getElementById('promoError');
 
     let appliedPromo = null;
     const formatPrice = (price) => `$${price.toFixed(2)}`;
@@ -192,23 +193,29 @@ document.addEventListener('DOMContentLoaded', function() {
             promoInput.disabled = true;
             applyPromoBtn.disabled = true;
             promoInput.value = code;
+            promoInput.classList.remove('error');
+            promoErrorEl?.classList.add('hidden');
             updateTotals();
         } else {
+            promoInput.classList.add('error');
+            promoErrorEl?.classList.remove('hidden');
             appliedPromo = null;
             promoInput.disabled = false;
             applyPromoBtn.disabled = false;
+            promoInput.value = '';
+            promoInput.focus();
             updateTotals();
         }
+    });
+
+    promoInput?.addEventListener('input', function() {
+        promoInput.classList.remove('error');
+        promoErrorEl?.classList.add('hidden');
     });
 
     checkoutBtn?.addEventListener('click', function(e) {
         e.preventDefault();
         if (cart.length === 0) return;
-    });
-
-    continueShoppingBtn?.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = '../index.html';
     });
 
     renderCart();
