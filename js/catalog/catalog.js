@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             .map(cb => parseInt(cb.value));
         
         if (checkedRatings.length > 0) {
-            // Берём минимальный выбранный рейтинг (если выбрано 4+ и 5+, показываем 4+)
+           
             currentFilters.minRating = Math.min(...checkedRatings);
         } else {
             currentFilters.minRating = 0;
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
         productsGrid.innerHTML = productsToRender.map(product => `
-            <div class="product-card" data-id="${product.id}" onclick="window.location.href='../html/card/card.html?id=${product.id}'">
+            <div class="product-card" data-id="${product.id}" onclick="window.location.href='../html/card.html?id=${product.id}'">
                 <div class="product-image-wrapper">
                     <img 
                         src="${product.images[0]}" 
