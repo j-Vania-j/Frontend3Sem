@@ -2,7 +2,6 @@
   {
     "id": "1",
     "title": "Portable Bluetooth Speaker",
-    "category": "Audio",
     "price": 129.99,
     "currency": "$",
     "rating": 4.5,
@@ -26,6 +25,146 @@
       "Bluetooth": "5.2",
       "Range": "30 meters",
       "Charging": "USB-C"
+    }
+  },
+  {
+    "id": "2",
+    "title": "Premium Wireless Headphones",
+    "price": 299.99,
+    "currency": "$",
+    "rating": 4.5,
+    "reviewCount": 327,
+    "shipping": "Free shipping",
+    "images": [
+      "../img/headphones-1.jpg",
+      "../img/headphones-2.jpg",
+      "../img/headphones-3.jpg"
+    ],
+    "highlights": [
+      "Battery Life: 40 hours",
+      "Connectivity: Bluetooth 5.3",
+      "Noise Cancellation: Active ANC"
+    ],
+    "description": "Experience immersive audio with our premium wireless headphones. Featuring advanced noise cancellation, 40-hour battery life, and studio-quality sound. Perfect for music enthusiasts and professionals who demand the best audio experience.",
+    "specs": {
+      "Battery Life": "40 hours",
+      "Connectivity": "Bluetooth 5.3",
+      "Noise Cancellation": "Active ANC",
+      "Driver Size": "40mm",
+      "Weight": "250g",
+      "Charging Time": "2 hours"
+    }
+  },
+  {
+    "id": "3",
+    "title": "Professional DSLR Camera",
+    "price": 2499.99,
+    "currency": "$",
+    "rating": 4.5,
+    "reviewCount": 327,
+    "shipping": "Free shipping",
+    "images": [
+      "../img/camera-1.jpg",
+      "../img/camera-2.jpg",
+      "../img/camera-3.jpg"
+    ],
+    "highlights": [
+      "Sensor: 45MP Full-Frame",
+      "Video: 4K 60fps",
+      "ISO Range: 100-51200"
+    ],
+    "description": "Capture stunning images with this professional-grade DSLR camera. Features a full-frame sensor, 4K video recording, and exceptional low-light performance. Perfect for serious photographers and videographers.",
+    "specs": {
+      "Sensor": "45MP Full-Frame",
+      "Video": "4K 60fps",
+      "ISO Range": "100-51200",
+      "Autofocus Points": "693",
+      "Burst Speed": "10 fps",
+      "Display": "3.2\" Tilting Touchscreen"
+    }
+  },
+  {
+    "id": "4",
+    "title": "Professional Laptop Pro",
+    "price": 1899.99,
+    "currency": "$",
+    "rating": 4.5,
+    "reviewCount": 327,
+    "shipping": "Free shipping",
+    "images": [
+      "../img/laptop-1.jpg",
+      "../img/laptop-2.jpg",
+      "../img/laptop-3.jpg"
+    ],
+    "highlights": [
+      "Processor: Intel Core i9",
+      "RAM: 32GB DDR5",
+      "Storage: 1TB SSD"
+    ],
+    "description": "Powerful performance meets sleek design in this professional laptop. Equipped with the latest processor, stunning display, and all-day battery life. Ideal for creative professionals and power users.",
+    "specs": {
+      "Processor": "Intel Core i9",
+      "RAM": "32GB DDR5",
+      "Storage": "1TB SSD",
+      "Display": "15.6\" 4K OLED",
+      "Graphics": "NVIDIA RTX 4060",
+      "Battery": "12 hours"
+    }
+  },
+  {
+    "id": "5",
+    "title": "Smart Fitness Watch Ultra",
+    "price": 449.99,
+    "currency": "$",
+    "rating": 4.5,
+    "reviewCount": 327,
+    "shipping": "Free shipping",
+    "images": [
+      "../img/watch-1.jpg",
+      "../img/watch-2.jpg",
+      "../img/watch-3.jpg"
+    ],
+    "highlights": [
+      "Display: 1.9\" AMOLED",
+      "Battery Life: 7 days",
+      "Water Resistance: 50m"
+    ],
+    "description": "Track your fitness goals with precision and style. Features advanced health monitoring, GPS tracking, and a vibrant always-on display. Water-resistant and built for active lifestyles.",
+    "specs": {
+      "Display": "1.9\" AMOLED",
+      "Battery Life": "7 days",
+      "Water Resistance": "50m",
+      "GPS": "Built-in",
+      "Health Sensors": "Heart Rate, SpO2, ECG",
+      "Compatibility": "iOS & Android"
+    }
+  },
+  {
+    "id": "6",
+    "title": "Ultra-Thin Tablet Pro",
+    "price": 799.99,
+    "currency": "$",
+    "rating": 4.5,
+    "reviewCount": 327,
+    "shipping": "Free shipping",
+    "images": [
+      "../img/tablet-1.jpg",
+      "../img/tablet-2.jpg",
+      "../img/tablet-3.jpg"
+    ],
+    "highlights": [
+      "Display: 12.9\" Liquid Retina",
+      "Processor: M2 Chip",
+      "Storage: 256GB"
+    ],
+    "description": "Experience productivity and entertainment on a stunning display. This ultra-thin tablet features powerful performance, all-day battery, and support for stylus input. Perfect for work and play.",
+    "specs": {
+      "Display": "12.9\" Liquid Retina",
+      "Processor": "M2 Chip",
+      "Storage": "256GB",
+      "RAM": "8GB",
+      "Battery": "10 hours",
+      "Stylus Support": "Yes"
     }
   }
 ]
