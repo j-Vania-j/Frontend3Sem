@@ -1,7 +1,8 @@
+
 function renderStars(rating) {
     const fullStar = '★';
     const emptyStar = '☆';
-    const halfStar = '⯪'; // Символ половинки
+    const halfStar = '⯪';
     let starsHTML = '';
     for (let i = 1; i <= 5; i++) {
         if (rating >= i) starsHTML += fullStar;
@@ -27,7 +28,7 @@ function updateCartBadge() {
     const badge = document.querySelector('.cart-badge');
     if (badge) {
         badge.textContent = totalItems;
-        badge.style.display = totalItems > 0 ? 'inline-block' : 'none';
+        badge.style.display = totalItems > 0 ? 'flex' : 'none';
     }
 }
 
@@ -37,6 +38,9 @@ function initGallery(images) {
     const thumbsContainer = document.getElementById('thumbs-container');
     const prevBtn = document.querySelector('.gallery-nav--prev');
     const nextBtn = document.querySelector('.gallery-nav--next');
+    
+    if (!mainImg || !thumbsContainer) return;
+    
     let currentIndex = 0;
 
     thumbsContainer.innerHTML = images.map((src, i) => `
@@ -54,33 +58,45 @@ function initGallery(images) {
         mainImg.style.opacity = '0';
         setTimeout(() => {
             mainImg.src = images[currentIndex];
+            mainImg.alt = `Product view ${currentIndex + 1}`;
             mainImg.style.opacity = '1';
         }, 150);
         thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
     };
 
-    prevBtn.addEventListener('click', () => updateView(currentIndex - 1));
-    nextBtn.addEventListener('click', () => updateView(currentIndex + 1));
+    prevBtn?.addEventListener('click', () => updateView(currentIndex - 1));
+    nextBtn?.addEventListener('click', () => updateView(currentIndex + 1));
     thumbs.forEach(t => t.addEventListener('click', () => updateView(+t.dataset.index)));
+    
     if (images.length > 0) mainImg.src = images[0];
 }
 
+
 function initQuantityControls() {
     const input = document.querySelector('.qty-input');
-    document.querySelector('.qty-btn--minus').addEventListener('click', () => {
-        if (parseInt(input.value) > 1) input.value--;
+    const minusBtn = document.querySelector('.qty-btn--minus');
+    const plusBtn = document.querySelector('.qty-btn--plus');
+    
+    if (!input || !minusBtn || !plusBtn) return;
+
+    minusBtn.addEventListener('click', () => {
+        if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
     });
-    document.querySelector('.qty-btn--plus').addEventListener('click', () => {
-        input.value++;
+    
+    plusBtn.addEventListener('click', () => {
+        input.value = parseInt(input.value) + 1;
     });
 }
 
+
 function initAccordionLogic() {
     const accordion = document.getElementById('specs-accordion');
+    if (!accordion) return;
+    
     const trigger = accordion.querySelector('.accordion-trigger');
     const content = accordion.querySelector('.accordion-content');
 
-    trigger.addEventListener('click', () => {
+    trigger?.addEventListener('click', () => {
         const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
         if (isExpanded) {
             content.style.maxHeight = null;
@@ -93,6 +109,7 @@ function initAccordionLogic() {
         }
     });
 }
+
 
 function renderSpecs(specs) {
     const container = document.getElementById('specs-container');
@@ -112,7 +129,7 @@ function renderSpecs(specs) {
         <div class="specs-accordion" id="specs-accordion">
             <button class="accordion-trigger" aria-expanded="false">
                 <span>Technical Specifications</span>
-                <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
             </button>
@@ -123,6 +140,7 @@ function renderSpecs(specs) {
     `;
     initAccordionLogic();
 }
+
 
 function initCartButton(product) {
     const btn = document.getElementById('add-to-cart-btn');
@@ -151,13 +169,13 @@ function initCartButton(product) {
         const quantity = parseInt(quantityInput?.value) || 1;
         
         const cartItem = {
-            id: product.id,                    
+            id: product.id,
             title: product.title,
             price: product.price,
             currency: product.currency || '$',
             category: product.category || 'Electronics',
             quantity: quantity,
-            image: product.images?.[0] || '../img/placeholder.jpg',
+            image: product.images?.[0] || '',
             addedAt: new Date().toISOString()
         };
 
@@ -177,61 +195,81 @@ function initCartButton(product) {
 
 
 async function initProductPage() {
-    console.log('Запуск инициализации карточки товара...');
-    console.log('Путь к JSON:', '../data/products.json');
+   
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    
+    const productContent = document.querySelector('.product-layout');
+    const breadcrumbProduct = document.getElementById('breadcrumb-product');
+    
+    if (!productId) {
+        if (productContent) productContent.innerHTML = '<p style="color: red; text-align: center;">Product ID not specified</p>';
+        return;
+    }
 
     try {
-        const response = await fetch('../data/products.json');
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ошибка! Статус: ${response.status}`);
-        }
+        const response = await fetch('../../data/products.json');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         
         const products = await response.json();
-        const product = products[0]; 
+       
+        const product = products.find(p => String(p.id) === String(productId));
         
-        if (!product) throw new Error('Товар не найден в JSON');
+        if (!product) {
+            if (productContent) productContent.innerHTML = '<p style="color: red; text-align: center;">Product not found</p>';
+            return;
+        }
 
-        console.log('Данные успешно загружены:', product.title);
+       
+        document.title = `${product.title} - TechStore`;
+        if (breadcrumbProduct) breadcrumbProduct.textContent = product.title;
 
-        document.getElementById('product-title').textContent = product.title;
-        document.getElementById('product-price').textContent = `${product.currency}${product.price.toFixed(2)}`;
-        document.getElementById('shipping-text').textContent = product.shipping;
+     
+        const titleEl = document.getElementById('product-title');
+        if (titleEl) titleEl.textContent = product.title;
+        
+        const priceEl = document.getElementById('product-price');
+        if (priceEl) priceEl.textContent = `${product.currency || '$'}${product.price.toFixed(2)}`;
+        
+        const shippingEl = document.getElementById('shipping-text');
+        if (shippingEl) shippingEl.textContent = product.shipping || '';
         
         const starsContainer = document.getElementById('rating-stars');
         if (starsContainer) starsContainer.innerHTML = renderStars(product.rating);
         
-        document.getElementById('rating-score').textContent = `(${product.rating})`;
-        document.getElementById('rating-reviews').textContent = `Based on ${product.reviewCount} reviews`;
+        const scoreEl = document.getElementById('rating-score');
+        if (scoreEl) scoreEl.textContent = `(${product.rating})`;
+        
+        const reviewsEl = document.getElementById('rating-reviews');
+        if (reviewsEl) reviewsEl.textContent = `Based on ${product.reviewCount || 0} reviews`;
 
         const highlightsList = document.getElementById('highlights-list');
-        if (highlightsList) {
+        if (highlightsList && product.highlights) {
             highlightsList.innerHTML = product.highlights.map(text => {
                 const parts = text.split(':');
                 return parts.length > 1 
-                    ? `<li><strong>${parts[0]}:</strong>${parts.slice(1).join(':')}</li>`
+                    ? `<li><strong>${parts[0]}:</strong> ${parts.slice(1).join(':')}</li>`
                     : `<li>${text}</li>`;
             }).join('');
         }
 
-        document.getElementById('description-text').textContent = product.description;
+        const descEl = document.getElementById('description-text');
+        if (descEl) descEl.textContent = product.description || '';
         
         renderSpecs(product.specs);
-
-        initGallery(product.images);
+        initGallery(product.images || []);
         initQuantityControls();
         initCartButton(product);
         updateCartBadge();
 
     } catch (error) {
-        console.error('Ошибка инициализации:', error);
-        const titleEl = document.getElementById('product-title');
-        if (titleEl) {
-            titleEl.textContent = 'Error loading product';
-            titleEl.style.color = '#EF4444';
+        console.error('Error loading product:', error);
+        if (productContent) {
+            productContent.innerHTML = '<p style="color: red; text-align: center; padding: 2rem;">Failed to load product. Please try again later.</p>';
         }
     }
 }
+
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initProductPage);
