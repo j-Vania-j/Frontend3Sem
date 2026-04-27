@@ -2,6 +2,7 @@
   {
     "id": "1",
     "title": "Portable Bluetooth Speaker",
+    "category": "Audio",
     "price": 129.99,
     "currency": "$",
     "rating": 4.5,
@@ -30,6 +31,7 @@
   {
     "id": "2",
     "title": "Premium Wireless Headphones",
+    "category": "Audio",
     "price": 299.99,
     "currency": "$",
     "rating": 4.5,
@@ -58,6 +60,7 @@
   {
     "id": "3",
     "title": "Professional DSLR Camera",
+    "category": "Photography",
     "price": 2499.99,
     "currency": "$",
     "rating": 4,
@@ -86,6 +89,7 @@
   {
     "id": "4",
     "title": "Professional Laptop Pro",
+    "category": "Computers",
     "price": 1899.99,
     "currency": "$",
     "rating": 4.5,
@@ -114,6 +118,7 @@
   {
     "id": "5",
     "title": "Smart Fitness Watch Ultra",
+    "category": "Wearables",
     "price": 449.99,
     "currency": "$",
     "rating": 4.5,
@@ -142,6 +147,7 @@
   {
     "id": "6",
     "title": "Ultra-Thin Tablet Pro",
+    "category": "Tablets",
     "price": 799.99,
     "currency": "$",
     "rating": 4.5,
