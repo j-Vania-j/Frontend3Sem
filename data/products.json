@@ -32,7 +32,7 @@
     "title": "Premium Wireless Headphones",
     "price": 299.99,
     "currency": "$",
-    "rating": 4.5,
+    "rating": 5,
     "reviewCount": 327,
     "shipping": "Free shipping",
     "images": [
@@ -60,7 +60,7 @@
     "title": "Professional DSLR Camera",
     "price": 2499.99,
     "currency": "$",
-    "rating": 4,
+    "rating": 1,
     "reviewCount": 327,
     "shipping": "Free shipping",
     "images": [
@@ -88,7 +88,7 @@
     "title": "Professional Laptop Pro",
     "price": 1899.99,
     "currency": "$",
-    "rating": 4.5,
+    "rating": 4,
     "reviewCount": 327,
     "shipping": "Free shipping",
     "images": [
@@ -116,7 +116,7 @@
     "title": "Smart Fitness Watch Ultra",
     "price": 449.99,
     "currency": "$",
-    "rating": 4.5,
+    "rating": 2,
     "reviewCount": 327,
     "shipping": "Free shipping",
     "images": [
