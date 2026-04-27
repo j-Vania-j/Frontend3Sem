@@ -2,7 +2,7 @@ const headerHTML = `
     <header class="header">
         <div class="container">
             <div class="header-wrapper">
-                <a href="catalog.html" class="logo">
+                <a href="${getPath('index.html')}" class="logo">
                     <div class="logo-icon">
                         <span>T</span>
                     </div>
@@ -12,7 +12,7 @@ const headerHTML = `
                 <nav class="nav">
                     <ul class="nav-list">
                         <li class="nav-item">
-                            <a href="catalog.html" class="nav-link">Products</a>
+                            <a href="${getPath('index.html')}" class="nav-link">Products</a>
                         </li>
                         <li class="nav-item">
                             <a href="#categories" class="nav-link">Categories</a>
@@ -33,7 +33,7 @@ const headerHTML = `
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
                     </button>
-                    <a href="cart.html" class="cart-link" aria-label="Shopping cart">
+                    <a href="${getPath('html/cart.html')}" class="cart-link" aria-label="Shopping cart">
                         <button class="icon-btn cart-btn" type="button">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="9" cy="21" r="1"></circle>
@@ -56,7 +56,7 @@ const headerHTML = `
             <nav class="mobile-nav">
                 <ul class="mobile-nav-list">
                     <li class="mobile-nav-item">
-                        <a href="#products" class="mobile-nav-link">Products</a>
+                        <a href="${getPath('index.html')}" class="mobile-nav-link">Products</a>
                     </li>
                     <li class="mobile-nav-item">
                         <a href="#categories" class="mobile-nav-link">Categories</a>
@@ -74,6 +74,20 @@ const headerHTML = `
 `;
 
 document.body.insertAdjacentHTML('afterbegin', headerHTML);
+
+function getPath(file) {
+    const currentPath = window.location.pathname;
+    
+    if (currentPath.endsWith('index.html') || currentPath.endsWith('/') || currentPath === '') {
+        return file;
+    }
+    
+    if (currentPath.includes('/html/')) {
+        return '../' + file;
+    }
+    
+    return file;
+}
 
 function getCart() {
     try {
