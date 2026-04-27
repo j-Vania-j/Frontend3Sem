@@ -1,10 +1,8 @@
-// js/catalog/catalog.js
 document.addEventListener('DOMContentLoaded', async () => {
     const productsGrid = document.getElementById('products-grid');
     const productsCount = document.querySelector('.products-count');
     const sortSelect = document.getElementById('sort');
     
-    // Элементы фильтров
     const ratingCheckboxes = document.querySelectorAll('input[name="rating"]');
     const minPriceInput = document.getElementById('minPrice');
     const maxPriceInput = document.getElementById('maxPrice');
@@ -17,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         maxPrice: 2600
     };
     
-    // Загрузка товаров из JSON
     async function loadProducts() {
         try {
             const response = await fetch('../data/products.json');
@@ -32,24 +29,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-    // Применение фильтров и сортировки
     function applyFiltersAndSort() {
         let filteredProducts = [...products];
         
-        // Фильтр по рейтингу
         if (currentFilters.minRating > 0) {
             filteredProducts = filteredProducts.filter(product => 
                 product.rating >= currentFilters.minRating
             );
         }
         
-        // Фильтр по цене
         filteredProducts = filteredProducts.filter(product => 
             product.price >= currentFilters.minPrice && 
             product.price <= currentFilters.maxPrice
         );
         
-        // Сортировка
         if (sortSelect) {
             const sortValue = sortSelect.value;
             filteredProducts = sortProducts(filteredProducts, sortValue);
@@ -59,7 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateProductsCount(filteredProducts.length);
     }
     
-    // Сортировка товаров
     function sortProducts(productsToSort, sortValue) {
         const sortedProducts = [...productsToSort];
         
@@ -67,31 +59,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             case 'name-asc':
                 sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
                 break;
-            case 'name-desc':
-                sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
-                break;
+        
             case 'price-asc':
                 sortedProducts.sort((a, b) => a.price - b.price);
                 break;
             case 'price-desc':
                 sortedProducts.sort((a, b) => b.price - a.price);
                 break;
-            case 'rating':
-                sortedProducts.sort((a, b) => b.rating - a.rating);
-                break;
+           
         }
         
         return sortedProducts;
     }
     
-    // Обработка фильтра по рейтингу
     function handleRatingFilter() {
         const checkedRatings = Array.from(ratingCheckboxes)
             .filter(cb => cb.checked)
             .map(cb => parseInt(cb.value));
         
         if (checkedRatings.length > 0) {
-           
             currentFilters.minRating = Math.min(...checkedRatings);
         } else {
             currentFilters.minRating = 0;
@@ -100,7 +86,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         applyFiltersAndSort();
     }
     
-    // Обработка фильтра по цене
     function handlePriceFilter() {
         if (minPriceInput && maxPriceInput) {
             currentFilters.minPrice = parseInt(minPriceInput.value);
@@ -109,28 +94,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-    // Сброс всех фильтров
     function clearAllFilters() {
-        // Сброс рейтинга
         ratingCheckboxes.forEach(cb => cb.checked = false);
         currentFilters.minRating = 0;
         
-        // Сброс цены (
         if (minPriceInput) minPriceInput.value = 0;
         if (maxPriceInput) maxPriceInput.value = 2600;
         currentFilters.minPrice = 0;
         currentFilters.maxPrice = 2600;
         
-        
         updatePriceSliderVisual();
         
-        // Сброс сортировки
         if (sortSelect) sortSelect.value = 'name-asc';
         
         applyFiltersAndSort();
     }
     
-    // Обновление визуального слайдера
     function updatePriceSliderVisual() {
         const range = document.getElementById('sliderRange');
         const thumbMin = document.getElementById('thumbMin');
@@ -152,7 +131,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-    // Отрисовка товаров
     function renderProducts(productsToRender) {
         if (!productsGrid) return;
         
@@ -167,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
         productsGrid.innerHTML = productsToRender.map(product => `
-            <div class="product-card" data-id="${product.id}" onclick="window.location.href='../html/card.html?id=${product.id}'">
+            <div class="product-card" data-id="${product.id}">
                 <div class="product-image-wrapper">
                     <img 
                         src="${product.images[0]}" 
@@ -175,6 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         class="product-image"
                         loading="lazy"
                     >
+                   
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">${product.title}</h3>
@@ -186,12 +165,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <span class="product-price">${product.currency}${product.price.toFixed(2)}</span>
                         <span class="product-category">${product.category || 'Audio'}</span>
                     </div>
+                    <button class="add-to-cart-btn" data-id="${product.id}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span>Add to Cart</span>
+                    </button>
                 </div>
             </div>
         `).join('');
+        
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                addToCartFromCatalog(btn.dataset.id);
+            });
+        });
+        
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.add-to-cart-btn')) {
+                    window.location.href = `html/card.html?id=${card.dataset.id}`;
+                }
+            });
+        });
     }
     
-    // Генерация звёзд рейтинга
     function renderStars(rating) {
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating % 1 >= 0.5;
@@ -219,34 +220,88 @@ document.addEventListener('DOMContentLoaded', async () => {
         return `<div class="stars-wrapper">${starsHTML}</div>`;
     }
     
-    // Обновление количества товаров
     function updateProductsCount(count) {
         if (productsCount) {
             productsCount.textContent = `${count} product${count !== 1 ? 's' : ''}`;
         }
     }
     
-    //Слушатели событий 
+    function getCart() {
+        const cart = localStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : [];
+    }
     
-    // Фильтр по рейтингу
+    function saveCart(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+    }
+    
+    function updateCartBadge() {
+        const cart = getCart();
+        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const badge = document.querySelector('.cart-badge');
+        if (badge) {
+            badge.textContent = totalItems;
+            badge.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+    }
+    
+    function addToCartFromCatalog(productId) {
+        const product = products.find(p => String(p.id) === String(productId));
+        if (!product) return;
+        
+        const cart = getCart();
+        const existingItem = cart.find(item => String(item.id) === String(product.id));
+        
+        if (existingItem) {
+            existingItem.quantity = (existingItem.quantity || 1) + 1;
+        } else {
+            cart.push({
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                currency: product.currency || '$',
+                category: product.category || 'Electronics',
+                quantity: 1,
+                image: product.images?.[0] || '',
+                addedAt: new Date().toISOString()
+            });
+        }
+        
+        saveCart(cart);
+        
+        const btn = document.querySelector(`.add-to-cart-btn[data-id="${productId}"]`);
+        if (btn) {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Added</span>
+            `;
+            btn.classList.add('added');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('added');
+            }, 1500);
+        }
+    }
+    
     ratingCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', handleRatingFilter);
     });
     
-    // Фильтр по цене
     if (minPriceInput) minPriceInput.addEventListener('input', handlePriceFilter);
     if (maxPriceInput) maxPriceInput.addEventListener('input', handlePriceFilter);
     
-    // Кнопка сброса
     if (clearFiltersBtn) {
         clearFiltersBtn.addEventListener('click', clearAllFilters);
     }
     
-    // Сортировка
     if (sortSelect) {
         sortSelect.addEventListener('change', applyFiltersAndSort);
     }
     
-    // Загружаем товары при загрузке страницы
     await loadProducts();
 });
