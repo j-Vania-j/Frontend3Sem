@@ -64,11 +64,9 @@ function initGallery(images) {
         if (index >= images.length) index = 0;
         currentIndex = index;
         mainImg.style.opacity = '0';
-        setTimeout(() => {
-            mainImg.src = images[currentIndex];
-            mainImg.alt = `Product view ${currentIndex + 1}`;
-            mainImg.style.opacity = '1';
-        }, 150);
+        mainImg.src = images[currentIndex];
+        mainImg.alt = `Product view ${currentIndex + 1}`;
+        mainImg.style.opacity = '1';
         thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
     };
 
