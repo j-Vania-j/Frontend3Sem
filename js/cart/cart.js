@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let cart = getCart();
     const TAX_RATE = 0.08;
-    const PROMO_CODES = { 'SAVE10': 0.10, 'WELCOME5': 0.05 };
+    const PROMO_CODES = { 'SAVE10': 0.10 };
 
     const cartItemsList = document.getElementById('cartItemsList');
     const subtotalEl = document.getElementById('subtotalValue');
@@ -113,9 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!cartItemsList) return;
         
         cartItemsList.innerHTML = '';
-        if (cart.length === 0) {
-            cartItemsList.innerHTML = '<div style="text-align:center;padding:40px;color:#6A7282;font-size:14px;">Ваша корзина пуста</div>';
-        } else {
+        if (cart.length > 0) {
             cart.forEach(item => cartItemsList.appendChild(createProductCard(item)));
         }
         updateTotals();
@@ -148,10 +146,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (discountRow) {
             discountRow.classList.remove('visible');
             discountRow.classList.add('hidden');
-        }
-        
-        if (checkoutBtn) {
-            checkoutBtn.disabled = cart.length === 0;
         }
     }
 
