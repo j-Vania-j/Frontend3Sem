@@ -59,7 +59,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             case 'name-asc':
                 sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
                 break;
-        
+            case 'name-desc': 
+                sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
+                break;
+
             case 'price-asc':
                 sortedProducts.sort((a, b) => a.price - b.price);
                 break;
